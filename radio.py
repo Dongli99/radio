@@ -73,7 +73,7 @@ class Radio(Frame):
 
     def drawRight(self):
         """Draw the right section of the radio interface."""
-        self.chart.place(relx=0.28, rely=0.1, relwidth=0.66, relheight=0.94)
+        self.chart.place(relx=0.28, rely=0.1, relwidth=0.76, relheight=0.94)
         self.drawChart()
 
     def drawBtns(self, init=False):

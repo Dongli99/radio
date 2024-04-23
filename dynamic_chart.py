@@ -25,7 +25,7 @@ class DynamicChart(Frame):
         thread (Thread): A Thread object for running the chart update loop.
     """
 
-    GENERATOR = VoiceDataGenerator(duration=1000, broadcast=True, gender="M")
+    GENERATOR = VoiceDataGenerator(duration=1000, gender="M")
     DATA = GENERATOR.data.tolist()
 
     def __init__(
@@ -56,10 +56,10 @@ class DynamicChart(Frame):
 
     def initUI(self):
         """Initialize the user interface of the chart."""
-        self.master.title("Dynamic Chart")
         self.pack(fill=BOTH, expand=1)
         self.thread = Thread(target=self.refresh, daemon=True)
         if not self.chart_only:
+            self.master.title("Dynamic Chart")
             self.drawTop()
         self.drawChart()
 

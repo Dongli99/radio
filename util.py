@@ -7,7 +7,7 @@ METRICS = [  # representing the parameters for creating data generators
     [1000, "F", 10, -25, -10],
     [500, "M", 100, 20, 10],
 ]
-COLORS = {
+COLORS = {  # representing the color ranges of channels in chart
     "news": [[255, 113, 205], [87, 85, 254]],
     "talk": [[100, 200, 50], [200, 100, 50]],
     "story": [[50, 150, 200], [200, 150, 50]],
