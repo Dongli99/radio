@@ -1,5 +1,7 @@
+# Author: Dongli Liu
+# Description: A class to generate synthetic voice data.
+
 import random
-import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -9,7 +11,7 @@ class VoiceDataGenerator:
 
     Attributes:
         duration (int): The duration of the voice data in 1/10 seconds.
-        gender (str): The gender of the voice data ('M' for male, 'F' for female).
+        gender (str): The gender of the voice ('M' - male, 'F' - female).
         noise (int): The level of noise to be added to the voice data.
         tune_pitch (int): Adjustment to the mean pitch.
         tune_pitch_sd (int): Adjustment to the pitch standard deviation.
@@ -96,7 +98,7 @@ class VoiceDataGenerator:
 
             elapse = round(
                 self._normal() * 90 + 10 if talking else self._normal() * 55 + 5
-            )  # when talking, takes a longer time. each state last at least 1 or 0.5 seconds
+            )  # when talking, takes a longer time.
             # cut the voice if longer than duration left
             elapse = duration if elapse > duration else elapse
             frequencies.extend(
@@ -161,34 +163,6 @@ class VoiceDataGenerator:
         """Generates a random value from a uniform distribution."""
         return random.random()
 
-    def plot(self, reflection=False):
-        """
-        Plots the voice data.
-        Args:
-            reflection (bool): Whether to reflect the voice data around the x-axis. Default is True.
-        Returns:
-            None
-        """
-        x = self.data[:, 0]
-        y = self.data[:, 1]
-        plt.figure(figsize=(15, 4))
-        plt.title("Voice Frequency")
-        plt.xlabel("Time (1/10 seconds)")
-        plt.ylabel("Pitch (HZ)")
-        plt.text(
-            0.025,
-            0.95,
-            f"Gender: {self.gender}\nPitch Mean: {self._pitch_mean}\nPitch SD: {self._pitch_sd}",
-            transform=plt.gca().transAxes,
-            ha="left",
-            va="top",
-        )
-        if reflection:
-            y = self._skip_invert(y)
-            plt.ylim(-self._pitch_mean * 4, self._pitch_mean * 4)
-        plt.plot(x, y)
-        plt.show()
-
     def _print_record(self, role, talking, elapse):
         """
         Print a record of voice activity.
@@ -211,5 +185,3 @@ if __name__ == "__main__":
     voice_generator = VoiceDataGenerator(gender="F", broadcast=True)
     data = voice_generator.data
     print(type(data))
-    # plot the data, reflection is shown in default
-    voice_generator.plot(reflection=False)

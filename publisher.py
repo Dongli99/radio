@@ -1,10 +1,13 @@
+# Author: Dongli Liu
+# Description: A class to simulate a transmitter console.
+
 import paho.mqtt.client as mqtt
 
 from queue import Queue
 from time import asctime, sleep
 from json import dumps
 from threading import Thread
-from tkinter import *
+from tkinter import Frame, BOTH, Button, Tk
 
 from data_generator import VoiceDataGenerator
 from util import HOST, PORT, CHANNELS, METRICS
@@ -84,7 +87,7 @@ class Transmitter:
     def __init__(
         self,
         bond=0,
-        delay=1,
+        delay=0.3,
     ) -> None:
         """Initialize transmitter."""
         self.bond = bond  # Transmitter bond
@@ -154,13 +157,13 @@ class Transmitter:
 
     def on_connect(self, client, userdata, flags, rc):
         if rc == 0:
-            print(f"Channel {self.name} connected to MQTT broker.")
+            print(f"Channel {self.topic} connected to MQTT broker.")
             self.connected = True
         else:
-            print(f"Channel {self.name} failed to connect with result code {rc}.")
+            print(f"Channel {self.topic} failed to connect with code {rc}.")
 
     def on_disconnect(self, client, userdata, rc):
-        print(f"Channel {self.name} disconnected from MQTT broker.")
+        print(f"Channel {self.topic} disconnected from MQTT broker.")
         self.connected = False
 
 
